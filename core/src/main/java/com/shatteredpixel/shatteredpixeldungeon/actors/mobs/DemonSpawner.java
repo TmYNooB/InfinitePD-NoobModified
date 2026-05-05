@@ -55,7 +55,7 @@ public class DemonSpawner extends Mob {
 		state = PASSIVE;
 
 		loot = PotionOfHealing.class;
-		lootChance = 1f;
+		lootChance = 3f;
 
 		properties.add(Property.IMMOVABLE);
 		properties.add(Property.MINIBOSS);

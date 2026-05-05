@@ -44,7 +44,7 @@ public class Slime extends Mob {
 		EXP = Dungeon.getCycleMultiplier(4);
 		maxLvl = 9;
 		
-		lootChance = 0.2f; //by default, see lootChance()
+		lootChance = 0.6f; //by default, see lootChance()
 	}
 	
 	@Override

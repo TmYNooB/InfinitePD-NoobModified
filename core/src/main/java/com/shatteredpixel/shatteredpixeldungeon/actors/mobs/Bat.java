@@ -47,7 +47,7 @@ public class Bat extends Mob {
 		flying = true;
 		
 		loot = new PotionOfHealing();
-		lootChance = 0.1667f; //by default, see lootChance()
+		lootChance = 0.5001f; //by default, see lootChance()
 	}
 	
 	@Override

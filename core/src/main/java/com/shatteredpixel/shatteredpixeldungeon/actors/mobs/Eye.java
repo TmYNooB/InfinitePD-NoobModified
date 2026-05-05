@@ -69,7 +69,7 @@ public class Eye extends Mob {
 		HUNTING = new Hunting();
 		
 		loot = new Dewdrop();
-		lootChance = 1f;
+		lootChance = 3f;
 
 		properties.add(Property.DEMONIC);
 	}

@@ -62,7 +62,7 @@ public class Ghoul extends Mob {
 		state = SLEEPING;
 
 		loot = Gold.class;
-		lootChance = 0.2f;
+		lootChance = 0.6f;
 		
 		properties.add(Property.UNDEAD);
 	}

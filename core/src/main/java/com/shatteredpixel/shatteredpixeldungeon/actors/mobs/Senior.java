@@ -34,7 +34,7 @@ public class Senior extends Monk {
 		spriteClass = SeniorSprite.class;
 
 		loot = new Pasty();
-		lootChance = 1f;
+		lootChance = 3f;
 	}
 	
 	@Override

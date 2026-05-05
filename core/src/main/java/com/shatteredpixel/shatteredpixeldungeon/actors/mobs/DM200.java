@@ -50,7 +50,7 @@ public class DM200 extends Mob {
 		maxLvl = 17;
 
 		loot = Random.oneOf(Generator.Category.WEAPON, Generator.Category.ARMOR);
-		lootChance = 0.2f; //initially, see lootChance()
+		lootChance = 0.6f; //initially, see lootChance()
 
 		properties.add(Property.INORGANIC);
 		properties.add(Property.LARGE);
