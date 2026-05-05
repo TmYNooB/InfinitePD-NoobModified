@@ -41,6 +41,22 @@ Purpose: Track every local gameplay/code change so upstream updates can be merge
 - Upstream merge risk:
   - High in Dungeon.java and Mob.java due to shared/global scaling methods.
 
+### 2026-05-06 - local changes (not yet committed)
+- Title: Portable Android APK signing setup for multi-PC development
+- Files:
+  - android/build.gradle
+  - .gitignore
+  - android/keystore.properties.example
+  - docs/android-signing-setup.md
+- Changes:
+  - Added release signing config that reads credentials from env vars or local android/keystore.properties.
+  - Added keystore/secrets ignore rules to git.
+  - Added example signing properties file and setup documentation.
+- Gameplay impact:
+  - None (build/release pipeline only).
+- Upstream merge risk:
+  - Medium in android/build.gradle (build script structure may diverge upstream).
+
 ## Entry Template
 ### YYYY-MM-DD - commit <hash or "local changes">
 - Title: <short name>

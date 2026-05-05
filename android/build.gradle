@@ -1,6 +1,26 @@
 
 apply plugin: 'com.android.application'
 
+def signingProps = new Properties()
+def signingPropsFile = file("keystore.properties")
+if (signingPropsFile.exists()) {
+    signingPropsFile.withInputStream { signingProps.load(it) }
+}
+
+def signingValue = { String envKey, String propKey ->
+    def fromEnv = System.getenv(envKey)
+    if (fromEnv != null && !fromEnv.trim().isEmpty()) return fromEnv
+    def fromProps = signingProps.getProperty(propKey)
+    if (fromProps != null && !fromProps.trim().isEmpty()) return fromProps
+    return null
+}
+
+def releaseStoreFile = signingValue("INFIPD_KEYSTORE_PATH", "storeFile")
+def releaseStorePassword = signingValue("INFIPD_KEYSTORE_PASSWORD", "storePassword")
+def releaseKeyAlias = signingValue("INFIPD_KEY_ALIAS", "keyAlias")
+def releaseKeyPassword = signingValue("INFIPD_KEY_PASSWORD", "keyPassword")
+def hasReleaseSigning = [releaseStoreFile, releaseStorePassword, releaseKeyAlias, releaseKeyPassword].every { it != null }
+
 android {
     namespace 'com.shatteredpixel.shatteredpixeldungeon.android'
     compileSdk appAndroidCompileSDK
@@ -36,6 +56,10 @@ android {
         }
         release {
 
+            if (hasReleaseSigning) {
+                signingConfig signingConfigs.release
+            }
+
             //These lines enable R8, which is a code shrinker/optimizer/obfuscator.
             //This makes release APKs smaller and more efficient, but also makes debugging trickier
             //as the information produced in stack traces must be de-obfuscated.
@@ -54,6 +78,17 @@ android {
     sourceSets {
         main {
             jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    signingConfigs {
+        if (hasReleaseSigning) {
+            release {
+                storeFile file(releaseStoreFile)
+                storePassword releaseStorePassword
+                keyAlias releaseKeyAlias
+                keyPassword releaseKeyPassword
+            }
         }
     }
 }

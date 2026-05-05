@@ -14,6 +14,9 @@ release/
 
 # Local configuration file (sdk path, etc)
 local.properties
+android/keystore.properties
+*.jks
+*.keystore
 
 #intellij project files
 *.iml
