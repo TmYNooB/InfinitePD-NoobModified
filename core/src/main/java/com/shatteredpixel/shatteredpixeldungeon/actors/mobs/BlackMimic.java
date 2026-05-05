@@ -88,7 +88,7 @@ public class BlackMimic extends Mob {
 		//TODO improved sprite
 		spriteClass = MimicSprite.Black.class;
 
-		int powerLevel = Dungeon.hero != null ? Dungeon.hero.lvl : 0;
+		long powerLevel = Math.max(1, Dungeon.escalatingDepth());
 
 		HP = HT = (long) ((bossMaxHPMulti + 1) * (900 + Math.round(powerLevel*32*Math.pow(7, Dungeon.cycle))));
 		EXP = Dungeon.getCycleMultiplier(2000);
@@ -104,20 +104,20 @@ public class BlackMimic extends Mob {
 	@Override
 	public long damageRoll() {
 		return Random.NormalLongRange(
-				Math.round(Dungeon.hero.lvl*4*Math.pow(7, Dungeon.cycle)),
-				Math.round(Dungeon.hero.lvl*32*Math.pow(7, Dungeon.cycle)) );
+				Math.round(Math.max(1, Dungeon.escalatingDepth()) * 4 * Math.pow(7, Dungeon.cycle)),
+				Math.round(Math.max(1, Dungeon.escalatingDepth()) * 32 * Math.pow(7, Dungeon.cycle)) );
 	}
 
 	@Override
 	public long attackSkill(Char target ) {
-		return 30 + Math.round(Dungeon.hero.lvl * 1.25f);
+		return 30 + Math.round(Math.max(1, Dungeon.escalatingDepth()) * 1.25f);
 	}
 
 	@Override
 	public long cycledDrRoll() {
 		return Random.NormalLongRange(
-				Math.round(Dungeon.hero.lvl*0.8d*Math.pow(7, Dungeon.cycle)),
-				Math.round(Dungeon.hero.lvl*2.25d*Math.pow(7, Dungeon.cycle)));
+				Math.round(Math.max(1, Dungeon.escalatingDepth()) * 0.8d * Math.pow(7, Dungeon.cycle)),
+				Math.round(Math.max(1, Dungeon.escalatingDepth()) * 2.25d * Math.pow(7, Dungeon.cycle)));
 	}
 
 	public int pylonsActivated = 0;
