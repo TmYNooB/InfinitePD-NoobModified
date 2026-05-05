@@ -47,7 +47,7 @@ public class RotLasher extends Mob {
 		EXP = Dungeon.getCycleMultiplier(1);
 
 		loot = Generator.Category.SEED;
-		lootChance = 0.75f;
+		lootChance = 2.25f;
 
 		state = WANDERING = new Waiting();
 		viewDistance = 1;

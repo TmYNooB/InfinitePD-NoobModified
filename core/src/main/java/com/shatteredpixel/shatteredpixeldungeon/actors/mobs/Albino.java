@@ -42,7 +42,7 @@ public class Albino extends Rat {
         defenseSkill = Dungeon.getCycleMultiplier(10)-10;
 		
 		loot = new MysteryMeat();
-		lootChance = 1f;
+		lootChance = 3f;
 	}
 	
 	@Override

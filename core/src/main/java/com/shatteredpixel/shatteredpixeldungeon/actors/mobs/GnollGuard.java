@@ -44,7 +44,7 @@ public class GnollGuard extends Mob {
 		maxLvl = -2;
 
 		loot = Spear.class;
-		lootChance = 0.1f;
+		lootChance = 0.3f;
 
 		WANDERING = new Wandering();
 	}

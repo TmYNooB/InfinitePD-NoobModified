@@ -45,7 +45,7 @@ public class Snake extends Mob {
 		maxLvl = 7;
 		
 		loot = Generator.Category.SEED;
-		lootChance = 0.25f;
+		lootChance = 0.75f;
 	}
 	
 	@Override

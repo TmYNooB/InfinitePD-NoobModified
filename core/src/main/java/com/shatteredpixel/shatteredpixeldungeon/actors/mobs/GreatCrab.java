@@ -54,7 +54,7 @@ public class GreatCrab extends Crab {
 		state = WANDERING;
 
 		loot = new MysteryMeat().quantity(2);
-		lootChance = 1f;
+		lootChance = 3f;
 
 		properties.add(Property.MINIBOSS);
 	}

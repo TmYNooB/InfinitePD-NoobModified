@@ -40,7 +40,7 @@ public class Acidic extends Scorpio {
 		properties.add(Property.ACIDIC);
 
 		loot = new PotionOfExperience();
-		lootChance = 1f;
+		lootChance = 3f;
 	}
 	@Override
 	public long attackProc(Char enemy, long damage) {

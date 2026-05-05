@@ -59,7 +59,7 @@ public class OOFThief extends Mob {
 		maxLvl = 11;
 
 		loot = IdealBag.class;
-		lootChance = 1f; //initially, see lootChance()
+		lootChance = 3f; //initially, see lootChance()
 
 		properties.add(Property.UNDEAD);
 	}

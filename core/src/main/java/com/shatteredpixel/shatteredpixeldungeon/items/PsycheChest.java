@@ -90,19 +90,11 @@ public class PsycheChest extends Item {
     }
 
     public static long neededExp(){
-        long neededExp = 100 + ((150L ^ (Dungeon.cycle + 1)) * Dungeon.cycle);
-        if (Dungeon.isChallenged(Challenges.NO_SCROLLS)){
-            neededExp *= 1.7f;
-        }
-        return neededExp;
+        return 10;
     }
 
     public static long neededExpTransmutation(){
-        long neededExp = 350 + ((350L ^ (Dungeon.cycle + 1)) * Dungeon.cycle);
-        if (Dungeon.isChallenged(Challenges.NO_SCROLLS)){
-            neededExp *= 2.5f;
-        }
-        return neededExp;
+        return 15;
     }
 
     public static long neededLevel(){

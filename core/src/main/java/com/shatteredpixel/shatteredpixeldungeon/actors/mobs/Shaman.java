@@ -54,7 +54,7 @@ public abstract class Shaman extends Mob {
 		maxLvl = 16;
 		
 		loot = Generator.Category.WAND;
-		lootChance = 0.03f; //initially, see rollToDropLoot
+		lootChance = 0.09f; //initially, see rollToDropLoot
 	}
 	
 	@Override

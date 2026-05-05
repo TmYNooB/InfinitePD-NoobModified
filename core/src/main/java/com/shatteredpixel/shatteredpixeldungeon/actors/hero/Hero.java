@@ -300,7 +300,7 @@ public class Hero extends Char {
 		return 2f;
 	}
 	public float getLootMultiplier() {
-		return 2f;
+		return 4f;
 	}
 
 	public Hero() {
@@ -2235,9 +2235,9 @@ if (!Dungeon.level.visited[cell] && !Dungeon.level.mapped[cell]
 	public static long maxExp( int lvl ){
 		HeroClass heroClass = Dungeon.hero == null ? GamesInProgress.selectedClass: Dungeon.hero.heroClass;
 		if (Dungeon.isChallenged(Challenges.FOR_THE_WORTHY)) {
-            return (long) ((20 + lvl * 20L) * 1.5d);
+            return (long) ((1 + lvl * 1L) * 1.5d);
         } else {
-            return 20 + lvl * 20L;
+            return 1 + lvl * 1L;
         }
 	}
 	

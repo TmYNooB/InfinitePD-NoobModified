@@ -66,7 +66,7 @@ public class Succubus extends Mob {
 		maxLvl = 25;
 		
 		loot = Generator.Category.SCROLL;
-		lootChance = 0.33f;
+		lootChance = 0.99f;
 
 		properties.add(Property.DEMONIC);
 	}

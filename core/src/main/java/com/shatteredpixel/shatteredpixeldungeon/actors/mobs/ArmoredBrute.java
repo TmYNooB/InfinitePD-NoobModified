@@ -43,7 +43,7 @@ public class ArmoredBrute extends Brute {
 		
 		//see rollToDropLoot
 		loot = Generator.Category.ARMOR;
-		lootChance = 1f;
+		lootChance = 3f;
 	}
 	
 	@Override

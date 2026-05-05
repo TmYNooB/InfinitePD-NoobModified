@@ -58,7 +58,7 @@ public class GnollTrickster extends Gnoll {
 
 		//at half quantity, see createLoot()
 		loot = Generator.Category.MISSILE;
-		lootChance = 1f;
+		lootChance = 3f;
 
 		properties.add(Property.MINIBOSS);
 	}
