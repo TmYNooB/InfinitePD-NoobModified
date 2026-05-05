@@ -1111,11 +1111,7 @@ public abstract class Mob extends Char {
 	}
 
     public long bossMulti() {
-        long multi = 0;
-        if (Dungeon.hero != null) {
-            multi += Dungeon.hero.lvl;
-        }
-        return multi;
+		return 0;
     }
 	
 	public void beckon( int cell ) {
