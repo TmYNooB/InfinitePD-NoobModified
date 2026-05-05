@@ -57,6 +57,22 @@ Purpose: Track every local gameplay/code change so upstream updates can be merge
 - Upstream merge risk:
   - Medium in android/build.gradle (build script structure may diverge upstream).
 
+### 2026-05-06 - local changes (not yet committed)
+- Title: Introduce fork-owned versioning (NoobMod)
+- Files:
+  - build.gradle
+  - gradle.properties
+  - docs/versioning.md
+  - docs/todo.md
+- Changes:
+  - Added independent versionName/versionCode for this fork.
+  - Added env-var overrides for per-machine and CI builds.
+  - Added version bump documentation and TODO tracking.
+- Gameplay impact:
+  - None (versioning/release metadata only).
+- Upstream merge risk:
+  - Medium in build.gradle and gradle.properties due to shared build metadata.
+
 ## Entry Template
 ### YYYY-MM-DD - commit <hash or "local changes">
 - Title: <short name>
