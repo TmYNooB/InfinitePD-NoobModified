@@ -3,11 +3,13 @@
 Script to create a fork and setup private repo using GitHub API
 """
 import requests
-import json
-import sys
 import time
+import os
+from getpass import getpass
 
-token = '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'
+token = os.getenv('GITHUB_TOKEN') or getpass('GitHub Token (PAT, wird nicht angezeigt): ').strip()
+if not token:
+    raise SystemExit('Kein GitHub Token angegeben. Setze GITHUB_TOKEN oder gib den Token beim Start ein.')
 headers = {
     'Authorization': f'token {token}',
     'Accept': 'application/vnd.github.v3+json',
