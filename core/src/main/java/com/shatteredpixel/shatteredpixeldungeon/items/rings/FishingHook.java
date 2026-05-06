@@ -40,6 +40,7 @@ import com.shatteredpixel.shatteredpixeldungeon.items.potions.brews.UnstableBrew
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.ExoticPotion;
 import com.shatteredpixel.shatteredpixeldungeon.items.potions.exotic.PotionOfOverload;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfTransmutation;
+import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.ScrollOfUpgrade;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ExoticScroll;
 import com.shatteredpixel.shatteredpixeldungeon.items.scrolls.exotic.ScrollOfMidas;
 import com.shatteredpixel.shatteredpixeldungeon.items.spells.UnstableSpell;
@@ -233,7 +234,7 @@ public class FishingHook extends Ring {
 	}
 
 	private static Item genHighValueConsumable(){
-		switch (Random.Int(6)){
+		switch (Random.Int(7)){
 			case 0: default:
 				Item i = genMidValueConsumable();
 				if (i instanceof Bomb){
@@ -251,6 +252,8 @@ public class FishingHook extends Ring {
 				return new AlchemyBag();
             case 5:
                 return new ShurikenOfShadows();
+			case 6:
+				return new ScrollOfUpgrade();
 		}
 	}
 

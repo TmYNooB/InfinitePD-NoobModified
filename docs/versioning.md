@@ -12,12 +12,17 @@ They are consumed in build.gradle for all targets.
 
 ## Format recommendation
 
-- versionName: NoobMod-MAJOR.MINOR.PATCH
+- versionName: InfinitePD NoobMod MAJOR.MINOR.PATCH - based on InfinitePD A.B.CSUFFIX
 - versionCode: monotonically increasing integer
 
+Rules for MAJOR.MINOR.PATCH:
+- PATCH (z): bug fixes
+- MINOR (y): feature changes
+- MAJOR (x): major rewrites/full releases
+
 Current defaults:
-- versionName: NoobMod-0.1.0
-- versionCode: 1000100
+- versionName: InfinitePD NoobMod 0.1.1 - based on InfinitePD 0.1.9d
+- versionCode: 1000101
 
 ## Bump procedure
 
@@ -38,7 +43,7 @@ You can override without changing files:
 PowerShell example:
 
 ```powershell
-$env:INFIPD_VERSION_NAME = "NoobMod-0.1.1"
+$env:INFIPD_VERSION_NAME = "InfinitePD NoobMod 0.1.1 - based on InfinitePD 0.1.9d"
 $env:INFIPD_VERSION_CODE = "1000101"
 ./gradlew desktop:release
 ```

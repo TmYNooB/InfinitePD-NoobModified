@@ -43,6 +43,7 @@ public class Hook extends NPC {
     public int tier = 1;
     public long power = 0;
     public long level = 0;
+    private int emptyTicks = 0;
 
     {
         spriteClass = HookSprite.class;
@@ -57,6 +58,7 @@ public class Hook extends NPC {
         bundle.put("items", items);
         bundle.put("tier", tier);
         bundle.put("power", power);
+        bundle.put("empty_ticks", emptyTicks);
     }
 
     @Override
@@ -66,6 +68,7 @@ public class Hook extends NPC {
         tier = bundle.getInt("tier");
         power = bundle.getLong("power");
         items = new ArrayList<>((Collection<Item>) ((Collection<?>) bundle.getCollection("items")));
+        emptyTicks = bundle.getInt("empty_ticks");
     }
 
     @Override
@@ -121,7 +124,17 @@ public class Hook extends NPC {
 
         FishingHook.level = this.level;
         ArrayList<Item> bonus = FishingHook.tryForBonusDrop(tries);
+
+        if (bonus.isEmpty()) {
+            emptyTicks++;
+            if (emptyTicks >= 2) {
+                int guaranteedTries = Math.max(1, (int) Math.ceil(Math.max(1f, FishingHook.triesToDrop)));
+                bonus = FishingHook.tryForBonusDrop(guaranteedTries);
+            }
+        }
+
         if (!bonus.isEmpty()) {
+            emptyTicks = 0;
             items.addAll(bonus);
             FishingHook.showFlareForBonusDrop(sprite);
             Sample.INSTANCE.play( Assets.Sounds.CHARGEUP );

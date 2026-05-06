@@ -22,8 +22,8 @@ allprojects {
     def propVersionName = findProperty("infipd.versionName")
     def propVersionCode = findProperty("infipd.versionCode")
 
-    def resolvedVersionName = (envVersionName ?: propVersionName ?: 'NoobMod-0.1.0')
-    def resolvedVersionCode = (envVersionCode ?: propVersionCode ?: '1000100') as Integer
+    def resolvedVersionName = (envVersionName ?: propVersionName ?: 'InfinitePD NoobMod 0.1.1 - based on InfinitePD 0.1.9d')
+    def resolvedVersionCode = (envVersionCode ?: propVersionCode ?: '1000101') as Integer
 
     ext {
         appName = 'Infinite Pixel Dungeon'
