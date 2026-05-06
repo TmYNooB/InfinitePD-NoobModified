@@ -73,6 +73,19 @@ Purpose: Track every local gameplay/code change so upstream updates can be merge
 - Upstream merge risk:
   - Medium in build.gradle and gradle.properties due to shared build metadata.
 
+### 2026-05-06 - local changes (not yet committed)
+- Title: Standardize GitHub release naming to version name
+- Files:
+  - docs/versioning.md
+  - scripts/create-github-release.sh
+- Changes:
+  - Added release naming rule: GitHub release title should match infipd.versionName.
+  - Added helper script that derives tag vMAJOR.MINOR.PATCH from versionName and creates/updates release consistently.
+- Gameplay impact:
+  - None (release process only).
+- Upstream merge risk:
+  - Low (docs + helper script only).
+
 ## Entry Template
 ### YYYY-MM-DD - commit <hash or "local changes">
 - Title: <short name>

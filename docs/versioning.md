@@ -34,6 +34,27 @@ Current defaults:
    - ./gradlew desktop:release
    - ./gradlew android:assembleRelease
 
+## GitHub release naming
+
+For this fork, GitHub release titles should match the current version name.
+
+- Release title: exact value of `infipd.versionName`
+- Release tag: `v<MAJOR.MINOR.PATCH>` (derived from versionName)
+
+Example:
+
+- versionName: `InfinitePD NoobMod 0.1.2 - based on InfinitePD 0.1.9d`
+- release title: `InfinitePD NoobMod 0.1.2 - based on InfinitePD 0.1.9d`
+- release tag: `v0.1.2`
+
+Use the helper script for consistent naming:
+
+```bash
+./scripts/create-github-release.sh <asset1> [asset2 ...]
+```
+
+The script reads `INFIPD_VERSION_NAME` first, then falls back to `gradle.properties`.
+
 ## Per-machine override (optional)
 
 You can override without changing files:
