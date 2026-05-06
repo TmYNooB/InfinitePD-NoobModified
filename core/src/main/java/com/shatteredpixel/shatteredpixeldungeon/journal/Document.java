@@ -332,6 +332,8 @@ public enum Document {
         INFINITY.pagesStates.put("all_that_matters",                     debug ? READ : NOT_FOUND);
         INFINITY.pagesStates.put("it_was_all_a_dream",                     debug ? READ : NOT_FOUND);
 
+		markAlchemyGuidesAvailable();
+
 	}
 	
 	private static final String DOCUMENTS = "documents";
@@ -359,6 +361,7 @@ public enum Document {
 	}
 	
 	public static void restore( Bundle bundle ){
+		markAlchemyGuidesAvailable();
 		
 		if (!bundle.contains( DOCUMENTS )){
 			return;
@@ -376,6 +379,14 @@ public enum Document {
 					}
 				}
 			}
+		}
+
+		markAlchemyGuidesAvailable();
+	}
+
+	private static void markAlchemyGuidesAvailable() {
+		for (String page : ALCHEMY_GUIDE.pagesStates.keySet()) {
+			ALCHEMY_GUIDE.pagesStates.put(page, READ);
 		}
 	}
 	
