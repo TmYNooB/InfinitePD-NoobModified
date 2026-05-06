@@ -1,6 +1,21 @@
 
 # GitHub Fork & Repo Creation Script
-$token = "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"
+$token = $env:GITHUB_TOKEN
+if (-not $token) {
+    $secureToken = Read-Host "GitHub Token (PAT)" -AsSecureString
+    $bstr = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($secureToken)
+    try {
+        $token = [Runtime.InteropServices.Marshal]::PtrToStringAuto($bstr)
+    }
+    finally {
+        [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($bstr)
+    }
+}
+
+if (-not $token) {
+    Write-Host "❌ Kein GitHub Token angegeben. Setze GITHUB_TOKEN oder gib den Token beim Start ein." -ForegroundColor Red
+    exit 1
+}
 $username = "TmYNooB"
 
 $headers = @{
