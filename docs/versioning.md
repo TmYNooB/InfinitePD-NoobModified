@@ -21,8 +21,8 @@ Rules for MAJOR.MINOR.PATCH:
 - MAJOR (x): major rewrites/full releases
 
 Current defaults:
-- versionName: InfinitePD NoobMod 0.1.1 - based on InfinitePD 0.1.9d
-- versionCode: 1000101
+- versionName: InfinitePD NoobMod 0.1.2 - based on InfinitePD 0.1.9d
+- versionCode: 1000102
 
 ## Bump procedure
 
@@ -43,8 +43,8 @@ You can override without changing files:
 PowerShell example:
 
 ```powershell
-$env:INFIPD_VERSION_NAME = "InfinitePD NoobMod 0.1.1 - based on InfinitePD 0.1.9d"
-$env:INFIPD_VERSION_CODE = "1000101"
+$env:INFIPD_VERSION_NAME = "InfinitePD NoobMod 0.1.2 - based on InfinitePD 0.1.9d"
+$env:INFIPD_VERSION_CODE = "1000102"
 ./gradlew desktop:release
 ```
 

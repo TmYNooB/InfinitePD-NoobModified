@@ -404,11 +404,11 @@ public class Ring extends KindofMisc {
 	//just used for ring descriptions
 	public long combinedBonus(Hero hero){
 		long bonus = 0;
-		for (Ring ring : (Ring[]) hero.belongings.rings.stream().filter(ring -> ring.getClass() == getClass()).toArray()) {
+		for (Ring ring : hero.belongings.rings.stream().filter(ring -> ring.getClass() == getClass()).toArray(Ring[]::new)) {
 			bonus += ring.soloBonus();
 		}
-		for (Ring ring : (Ring[]) hero.belongings.miscs.stream().filter(ring -> ring.getClass() == getClass()).toArray()) {
-			bonus += ((Ring) ring).soloBonus();
+		for (Ring ring : hero.belongings.miscs.stream().filter(item -> item instanceof Ring).filter(ring -> ring.getClass() == getClass()).toArray(Ring[]::new)) {
+			bonus += ring.soloBonus();
 		}
 		return bonus;
 	}
@@ -417,7 +417,6 @@ public class Ring extends KindofMisc {
 	public long combinedBuffedBonus(Hero hero){
 		long bonus = 0;
 		for (Ring ring : hero.belongings.rings.stream().filter(ring -> ring.getClass() == getClass()).toArray(Ring[]::new)) {
-			System.out.println(ring);
 			bonus += ring.soloBuffedBonus();
 		}
 		for (Ring ring : hero.belongings.miscs.stream().filter(item -> item instanceof Ring ).filter(ring -> ring.getClass() == getClass()).toArray(Ring[]::new)) {
