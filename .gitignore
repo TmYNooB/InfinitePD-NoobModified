@@ -1,6 +1,9 @@
 # Built application files
 *.apk
 
+# macOS files
+.DS_Store
+
 # Files for the Dalvik VM
 *.dex
 

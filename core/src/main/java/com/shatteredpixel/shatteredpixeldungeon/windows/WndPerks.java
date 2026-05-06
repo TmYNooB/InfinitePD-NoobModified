@@ -42,9 +42,13 @@ public class WndPerks extends Window {
     private static final int TTL_HEIGHT    = 18;
     private static final int BTN_HEIGHT    = 18;
     private static final int GAP        = 1;
+    private static final int INFO_BTN_WIDTH = 16;
 
     private ArrayList<IconButton> infos = new ArrayList<>();
     private ArrayList<ConduitBox> boxes = new ArrayList<>();
+    private ArrayList<Float> infoPosX = new ArrayList<>();
+    private ArrayList<Float> infoPosY = new ArrayList<>();
+    private ArrayList<Float> boxPosY = new ArrayList<>();
     private ScrollPane pane;
 
     public WndPerks(ArrayList<Perks.Perk> perks, boolean editable ) {
@@ -65,15 +69,9 @@ public class WndPerks extends Window {
         pane = new ScrollPane(new Component()) {
             @Override
             public void onClick(float x, float y) {
-                int size = boxes.size();
-                if (editable) {
-                    for (int i = 0; i < size; i++) {
-                        if (boxes.get(i).onClick(x, y)) break;
-                    }
-                }
-                size = infos.size();
+                int size = infos.size();
                 for (int i = 0; i < size; i++) {
-                    if (infos.get(i).inside(x, y)) {
+                    if (isInfoHit(infoPosX.get(i), infoPosY.get(i), x, y)) {
 
                         String message = perks.get(i).desc();
                         String title = Messages.titleCase(perks.get(i).toString());
@@ -83,7 +81,17 @@ public class WndPerks extends Window {
                                         title, message)
                         );
 
-                        break;
+                        return;
+                    }
+                }
+
+                if (editable) {
+                    size = boxes.size();
+                    for (int i = 0; i < size; i++) {
+                        if (isBoxHit(boxPosY.get(i), x, y)) {
+                            boxes.get(i).onClick();
+                            return;
+                        }
                     }
                 }
             }
@@ -102,10 +110,11 @@ public class WndPerks extends Window {
             cb.conduct = i;
 
             pos += GAP;
-            cb.setRect(0, pos, WIDTH-16, BTN_HEIGHT);
+            cb.setRect(0, pos, WIDTH - INFO_BTN_WIDTH, BTN_HEIGHT);
 
             content.add(cb);
             boxes.add(cb);
+            boxPosY.add(pos);
             IconButton info = new IconButton(Icons.get(Icons.INFO)) {
                 @Override
                 protected void layout() {
@@ -113,9 +122,12 @@ public class WndPerks extends Window {
                     hotArea.y = -5000;
                 }
             };
-            info.setRect(cb.right(), pos, 16, BTN_HEIGHT);
+            float infoPosXVal = cb.right();
+            info.setRect(infoPosXVal, pos, INFO_BTN_WIDTH, BTN_HEIGHT);
             content.add(info);
             infos.add(info);
+            infoPosX.add(infoPosXVal);
+            infoPosY.add(pos);
 
             pos = cb.bottom();
         }
@@ -126,6 +138,16 @@ public class WndPerks extends Window {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
+
+    private boolean isInfoHit(float btnX, float btnY, float clickX, float clickY) {
+        return clickX >= btnX && clickX <= btnX + INFO_BTN_WIDTH
+                && clickY >= btnY && clickY <= btnY + BTN_HEIGHT;
+    }
+
+    private boolean isBoxHit(float btnY, float clickX, float clickY) {
+        return clickX >= 0 && clickX < WIDTH - INFO_BTN_WIDTH
+                && clickY >= btnY && clickY < btnY + BTN_HEIGHT;
     }
 
     public static class ConduitBox extends RedButton {
@@ -139,13 +161,6 @@ public class WndPerks extends Window {
         @Override
         protected void onClick() {
             super.onClick();
-        }
-
-        protected boolean onClick(float x, float y) {
-            if (!inside(x, y)) return false;
-            Sample.INSTANCE.play(Assets.Sounds.CLICK);
-            onClick();
-            return true;
         }
 
         @Override
