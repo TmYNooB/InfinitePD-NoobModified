@@ -20,6 +20,14 @@ def releaseStorePassword = signingValue("INFIPD_KEYSTORE_PASSWORD", "storePasswo
 def releaseKeyAlias = signingValue("INFIPD_KEY_ALIAS", "keyAlias")
 def releaseKeyPassword = signingValue("INFIPD_KEY_PASSWORD", "keyPassword")
 def hasReleaseSigning = [releaseStoreFile, releaseStorePassword, releaseKeyAlias, releaseKeyPassword].every { it != null }
+def requestedReleaseBuild = gradle.startParameter.taskNames.any { it.toLowerCase().contains("release") }
+
+if (requestedReleaseBuild && !hasReleaseSigning) {
+    throw new GradleException(
+            "Release signing is not configured. Set INFIPD_KEYSTORE_PATH, INFIPD_KEYSTORE_PASSWORD, " +
+            "INFIPD_KEY_ALIAS, INFIPD_KEY_PASSWORD or create android/keystore.properties locally."
+    )
+}
 
 android {
     namespace 'com.shatteredpixel.shatteredpixeldungeon.android'

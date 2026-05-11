@@ -96,6 +96,18 @@ Infinite Pixel Dungeon/
 
 ## 📝 Git Workflow
 
+### Security Guardrails (lokal + CI)
+```bash
+# Einmal pro Clone: lokale Hooks aktivieren
+git config core.hooksPath .githooks
+```
+
+Was wird blockiert:
+- Commit von `android/keystore.properties`, `.jks`, `.keystore`
+- Commit von Signing-Passwörtern oder GitHub Token-Mustern
+
+CI schützt zusätzlich serverseitig per Workflow vor Secret-Leaks.
+
 ### Updates vom Original-Fork holen
 ```bash
 # Hole neueste Version vom Original
