@@ -26,7 +26,7 @@ allprojects {
     def resolvedVersionCode = (envVersionCode ?: propVersionCode ?: '1000101') as Integer
 
     ext {
-        appName = 'Infinite Pixel Dungeon'
+        appName = 'NoobMod Infinite PD'
         appPackageName = 'com.dragonmaster14545.infinitepixeldungeon.com'
 
         appVersionCode = resolvedVersionCode

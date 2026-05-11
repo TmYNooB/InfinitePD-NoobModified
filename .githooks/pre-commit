@@ -1,0 +1,34 @@
+#!/usr/bin/env sh
+
+# Block accidental commits of signing secrets and GitHub tokens.
+set -eu
+
+staged_files="$(git diff --cached --name-only --diff-filter=ACMR)"
+
+# 1) Block secret files by filename/path.
+for f in $staged_files; do
+  case "$f" in
+    android/keystore.properties|*.jks|*.keystore)
+      echo "ERROR: Refusing to commit signing secret file: $f"
+      echo "Keep signing data local only (ignored by git)."
+      exit 1
+      ;;
+  esac
+done
+
+# 2) Block explicit signing secret assignments in staged content.
+if git diff --cached -U0 | grep -E "^(\+)(.*(INFIPD_KEYSTORE_PASSWORD[[:space:]]*[=:][[:space:]]*['\"][^'\"]+['\"]|INFIPD_KEY_PASSWORD[[:space:]]*[=:][[:space:]]*['\"][^'\"]+['\"]|storePassword[[:space:]]*[=:][[:space:]]*['\"][^'\"]+['\"]|keyPassword[[:space:]]*[=:][[:space:]]*['\"][^'\"]+['\"]))" >/dev/null 2>&1; then
+  echo "ERROR: Refusing to commit staged signing passwords."
+  echo "Detected explicit signing password assignment in staged diff."
+  exit 1
+fi
+
+# 3) Block common GitHub token patterns in staged content.
+# Exclude this hook and CI regex workflow, which intentionally contain token patterns as literals.
+if git diff --cached -U0 -- . ':(exclude).githooks/pre-commit' ':(exclude).github/workflows/ci-guardrails.yml' | grep -E "^(\+)(.*(ghp_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|Authorization:[[:space:]]*token[[:space:]]+[A-Za-z0-9_\-]{10,}|GITHUB_TOKEN[[:space:]]*=[[:space:]]*['\"][^'\"]{10,}['\"]|GH_TOKEN[[:space:]]*=[[:space:]]*['\"][^'\"]{10,}['\"]))" >/dev/null 2>&1; then
+  echo "ERROR: Refusing to commit staged GitHub token-like content."
+  echo "Detected a pattern resembling PAT/token assignment in staged diff."
+  exit 1
+fi
+
+exit 0

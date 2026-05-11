@@ -1,0 +1,61 @@
+name: CI Guardrails
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+jobs:
+  secret-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Scan tracked files for obvious secrets
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          PATTERN='ghp_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|Authorization:[[:space:]]*token[[:space:]]+[A-Za-z0-9_\-]{10,}|GITHUB_TOKEN[[:space:]]*=[[:space:]]*"[^"]{10,}"|GITHUB_TOKEN[[:space:]]*=[[:space:]]*'"'"'[^'"'"']{10,}'"'"'|GH_TOKEN[[:space:]]*=[[:space:]]*"[^"]{10,}"|GH_TOKEN[[:space:]]*=[[:space:]]*'"'"'[^'"'"']{10,}'"'"''
+
+          if git grep -n -I -E "$PATTERN" -- . ':!*.md'; then
+            echo "Secret scan failed: token-like content detected in tracked files."
+            exit 1
+          fi
+
+          echo "Secret scan passed."
+
+  release-signing-guard:
+    # Enforce signing secrets only for release-like runs (tags or manual trigger).
+    if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    env:
+      INFIPD_KEYSTORE_PATH: ${{ secrets.INFIPD_KEYSTORE_PATH }}
+      INFIPD_KEYSTORE_PASSWORD: ${{ secrets.INFIPD_KEYSTORE_PASSWORD }}
+      INFIPD_KEY_ALIAS: ${{ secrets.INFIPD_KEY_ALIAS }}
+      INFIPD_KEY_PASSWORD: ${{ secrets.INFIPD_KEY_PASSWORD }}
+    steps:
+      - name: Validate required signing secrets are set
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          missing=0
+          for var in INFIPD_KEYSTORE_PATH INFIPD_KEYSTORE_PASSWORD INFIPD_KEY_ALIAS INFIPD_KEY_PASSWORD; do
+            if [ -z "${!var:-}" ]; then
+              echo "Missing required secret: $var"
+              missing=1
+            fi
+          done
+
+          if [ "$missing" -ne 0 ]; then
+            echo "Release signing guard failed: configure required repository/environment secrets."
+            exit 1
+          fi
+
+          echo "Release signing guard passed."
